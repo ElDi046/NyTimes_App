@@ -22,12 +22,12 @@ class LibrosViewModel: ViewModel() {
     fun getLiveDataObserver(): MutableLiveData<newResponse>{
         return liveData
     }
-    fun libroAPICall(raza:String){
+    fun libroAPICall(){
         CoroutineScope(Dispatchers.IO).launch {
             val call = RetrofitSingleton.getRetroFit().create(LibrosAPIService::class.java).getLibros()
             call.enqueue(object : Callback<newResponse> {
                 override fun onResponse(call: Call<newResponse>, response: Response<newResponse>) {
-                    Log.v("libro", response.body()?.results?.libros.toString())
+                    Log.v("libro", response.body()?.results?.books.toString())
                     liveData.postValue(response.body())
                 }
 

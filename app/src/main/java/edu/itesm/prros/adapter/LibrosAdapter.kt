@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import edu.itesm.prros.R
-import edu.itesm.prros.response.Libro
+import edu.itesm.prros.response.Book
 
-class LibrosAdapter(private var libros: List<Libro>) : RecyclerView.Adapter<LibroViewHolder>() {
+class LibrosAdapter(private var libros: List<Book>) : RecyclerView.Adapter<LibroViewHolder>() {
 
-    fun setLibro(books: List<Libro>){
+    fun setLibro(books: List<Book>){
         libros = books.take(10)
     }
 

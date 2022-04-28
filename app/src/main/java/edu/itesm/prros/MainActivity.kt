@@ -1,3 +1,6 @@
+//Diego Ramírez Levy - A01367771
+//Aldo Fernando Ortíz Mejía - A01654725
+
 package edu.itesm.prros
 
 import android.annotation.SuppressLint
@@ -10,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import edu.itesm.prros.adapter.LibrosAdapter
 import edu.itesm.prros.databinding.ActivityMainBinding
 import edu.itesm.prros.mvvm.LibrosViewModel
-import edu.itesm.prros.response.Libro
+import edu.itesm.prros.response.Book
 
 
 class MainActivity : AppCompatActivity(){
     private lateinit var adapter: LibrosAdapter
     private lateinit var binding: ActivityMainBinding
     private  lateinit var viewModel: LibrosViewModel
-    private val libros = mutableListOf<Libro>()
+    private val libros = mutableListOf<Book>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +28,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(binding.root)
         initAdapter()
         initViewModel()
+        viewModel.libroAPICall()
     }
 
     @SuppressLint("NotifyDatasetChanged")
@@ -32,8 +36,8 @@ class MainActivity : AppCompatActivity(){
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
         viewModel.getLiveDataObserver().observe(this, Observer {
             if (it != null){
-                Log.v("Libros", it.results.libros.toString())
-                adapter.setLibro(it.results.libros)
+                Log.v("Libros", it.results.books.toString())
+                adapter.setLibro(it.results.books)
                 adapter.notifyDataSetChanged()
             }
         })
