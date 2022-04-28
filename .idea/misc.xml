@@ -3,6 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/warpi/AndroidStudioProjects/NyTimes_App/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.259" />
+        <entry key="..\:/Users/warpi/AndroidStudioProjects/NyTimes_App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.259" />
+        <entry key="..\:/Users/warpi/AndroidStudioProjects/NyTimes_App/app/src/main/res/layout/activity_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/warpi/AndroidStudioProjects/NyTimes_App/app/src/main/res/layout/perro_renglon.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/warpi/AndroidStudioProjects/NyTimes_App/app/src/main/res/layout/renglon_libro.xml" value="0.27447916666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/perro_renglon.xml" value="0.1" />
       </map>

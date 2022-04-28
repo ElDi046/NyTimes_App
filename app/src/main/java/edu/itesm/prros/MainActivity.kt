@@ -1,34 +1,23 @@
 package edu.itesm.prros
 
-import android.os.Binder
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.inputmethod.InputMethodManager
-import android.widget.Adapter
-import android.widget.SearchView.OnQueryTextListener
-import android.widget.Toast
+import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import edu.itesm.prros.adapter.PerrosAdapter
+import edu.itesm.prros.adapter.LibrosAdapter
 import edu.itesm.prros.databinding.ActivityMainBinding
-import edu.itesm.prros.mvvm.ListaPerrosViewModel
-import edu.itesm.prros.patterns.RetrofitSingleton
-import edu.itesm.prros.patterns.RetrofitSingleton.getRetroFit
-import edu.itesm.prros.response.PerroResponse
-import edu.itesm.prros.service.PerrosAPIService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import edu.itesm.prros.mvvm.LibrosViewModel
+import edu.itesm.prros.response.Libro
 
-class MainActivity : AppCompatActivity(),
-    android.widget.SearchView.OnQueryTextListener {
-    private lateinit var adapter: PerrosAdapter
+
+class MainActivity : AppCompatActivity(){
+    private lateinit var adapter: LibrosAdapter
     private lateinit var binding: ActivityMainBinding
-    private  lateinit var viewModel: ListaPerrosViewModel
-    private val perrosPics = mutableListOf<String>()
+    private  lateinit var viewModel: LibrosViewModel
+    private val libros = mutableListOf<Libro>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,48 +25,22 @@ class MainActivity : AppCompatActivity(),
         setContentView(binding.root)
         initAdapter()
         initViewModel()
-        print("MVVM done")
     }
+
+    @SuppressLint("NotifyDatasetChanged")
     private fun initViewModel(){
-        viewModel = ViewModelProvider(this).get(ListaPerrosViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
         viewModel.getLiveDataObserver().observe(this, Observer {
-            if (!it.isEmpty()){
-                adapter.setImagenes(it)
+            if (it != null){
+                Log.v("Libros", it.results.libros.toString())
+                adapter.setLibro(it.results.libros)
                 adapter.notifyDataSetChanged()
             }
         })
     }
     private fun initAdapter(){
-        adapter = PerrosAdapter(perrosPics)
-        binding.perros.layoutManager = LinearLayoutManager(this)
-        binding.perros.adapter = adapter
-        //buscarPerrosPorRaza("labrador")
-        binding.busqueda.setOnQueryTextListener(this)
+        adapter = LibrosAdapter(libros)
+        binding.listaLibros.adapter = adapter
+        binding.listaLibros.layoutManager = LinearLayoutManager(this)
     }
-
-    private fun hideKeyboard() {
-        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
-    }
-
-
-    override fun onQueryTextSubmit(searchString: String?): Boolean {
-        if(!searchString.isNullOrEmpty()){
-            //buscarPerrosPorRaza(searchString.lowercase())
-            consultaPerros(searchString)
-        }
-        return true
-    }
-
-    fun  consultaPerros(searchString: String?){
-        if(   !searchString.isNullOrEmpty()) {
-            viewModel.perroAPICall(searchString)
-            hideKeyboard()
-        }
-    }
-    override fun onQueryTextChange(p0: String?): Boolean {
-        return true
-    }
-
-
 }
