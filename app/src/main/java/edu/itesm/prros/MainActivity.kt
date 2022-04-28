@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity(){
     @SuppressLint("NotifyDatasetChanged")
     private fun initViewModel(){
         viewModel = ViewModelProvider(this).get(LibrosViewModel::class.java)
-        viewModel.getLiveDataObserver().observe(this, Observer {
+        viewModel.getLiveDataObserver().observe(this,{
             if (it != null){
                 Log.v("Libros", it.results.books.toString())
                 adapter.setLibro(it.results.books)
@@ -44,7 +44,8 @@ class MainActivity : AppCompatActivity(){
     }
     private fun initAdapter(){
         adapter = LibrosAdapter(libros)
-        binding.listaLibros.adapter = adapter
         binding.listaLibros.layoutManager = LinearLayoutManager(this)
+        binding.listaLibros.adapter = adapter
+
     }
 }
